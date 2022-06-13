@@ -1,6 +1,7 @@
 /// This runs a formula and returns some results!
 
 import { Formula } from './models/Formula';
+import { EffectiveTargetRanges } from './models/misc/Values';
 import { Pool } from './models/pool/Pool';
 import { EffectiveTargetRange } from './models/TargetRange';
 
@@ -22,10 +23,8 @@ interface CalculationResult {
     var: string;
 }
 
-export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
-
-    const formula = req.formula;
-    const targets: EffectiveTargetRange[] = formula.readings.map(r => ({
+const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): EffectiveTargetRanges => {
+    const targets = formula.readings.map(r => ({
         var: r.var,
         range: r.targetRange
     }));
@@ -39,7 +38,7 @@ export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
         }
     });
 
-    req.targetLevels.forEach(overrideTargetLevel => {
+    customTargets.forEach(overrideTargetLevel => {
         const i = targets.findIndex(rt => rt.var === overrideTargetLevel.var);
         if (i >= 0) {
             targets[i] = overrideTargetLevel;
@@ -48,11 +47,16 @@ export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
         }
     });
 
-
-    const effectiveTargetRanges = targets.reduce((res, t) => {
+    return targets.reduce((res, t) => {
         res[t.var] = { ...t.range };
         return res;
     }, {});
+};
+
+export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
+
+    const formula = req.formula;
+    const effectiveTargetRanges = getTargets(formula, req.targetLevels);
 
     const outputs: Record<string, number> = {};
     const readings: Record<string, number> = {};
