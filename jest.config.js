@@ -4,6 +4,7 @@ module.exports = {
         '^.+\\.(t|j)sx?$': ['@swc/jest'],
     },
     moduleNameMapper: {
-        '~/*': '<rootDir>/*',
-    }
+        '~/(.*)': '<rootDir>/$1',
+    },
+    roots: ['./tests', './']
 };
