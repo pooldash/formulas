@@ -22,10 +22,10 @@ describe('LSI Treatment', () => {
         };
     };
 
-    test('Correctly calculates LSI when all params are present', () => {
+    it('Correctly calculates LSI when all params are present', () => {
         
     });
-    test('Returns null when all params are not present', () => {
+    it('Returns null when all params are not present', () => {
         // Arrange
         const pool = getPool();
         const readings = getReadings();
