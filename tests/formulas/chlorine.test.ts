@@ -4,8 +4,7 @@ import { ReadingValue } from '~/formulas/models/misc/Values';
 import { Pool } from '~/formulas/models/pool/Pool';
 import { EffectiveTargetRange } from '~/formulas/models/TargetRange';
 
-
-test('The darn thing works', () => {
+test('Random happy test path.', () => {
     const formula = chlorineFormula;
 
     const pool: Pool = {
@@ -34,6 +33,11 @@ test('The darn thing works', () => {
         targetLevels,
     });
 
-    expect(results.length > 0);
-    expect(results[0].value ?? 0 > 10);
+    const res = results.reduce((p, c) => {
+        p[c.var] = c.value;
+        return p;
+    }, {});
+    
+    expect(res['calc_hypo']).toBeCloseTo(10.4);
+    expect(res['soda_ash']).toBeCloseTo(68.6);
 });
