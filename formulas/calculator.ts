@@ -1,26 +1,16 @@
 /// This runs a formula and returns some results!
 
 import { Formula } from './models/Formula';
-import { EffectiveTargetRanges } from './models/misc/Values';
+import { EffectiveTargetRanges, ReadingValues, TreatmentValues } from './models/misc/Values';
 import { Pool } from './models/pool/Pool';
 import { EffectiveTargetRange } from './models/TargetRange';
 
 
 export interface FormulaRunRequest {
     formula: Formula;
-    readings: ReadingEntry[];
+    readings: ReadingValues;
     targetLevels: EffectiveTargetRange[];   // TODO: reconsider this!
     pool: Pool;
-}
-
-interface ReadingEntry {
-    var: string;
-    value: number;
-}
-
-interface CalculationResult {
-    value: number | null;
-    var: string;
 }
 
 const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): EffectiveTargetRanges => {
@@ -53,23 +43,11 @@ const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): Ef
     }, {});
 };
 
-export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
+export const calculate = (req: FormulaRunRequest): TreatmentValues => {
 
-    const formula = req.formula;
+    const { formula, readings } = req;
     const effectiveTargetRanges = getTargets(formula, req.targetLevels);
-
-    const outputs: Record<string, number> = {};
-    const readings: Record<string, number> = {};
-    const skipped: Record<string, boolean> = {};
-    formula.readings.forEach(r => {
-        const entry = req.readings.find(x => x.var === r.var);
-        if (entry) {
-            readings[r.var] = entry.value;
-        } else {
-            readings[r.var] = r.defaultValue;
-            skipped[r.var] = true;
-        }
-    });
+    const outputs: TreatmentValues = {};
 
     formula.treatments.forEach(t => {
         const result = t.function(
@@ -77,12 +55,11 @@ export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
             readings,
             outputs,
             effectiveTargetRanges,
-            skipped,
         );
-        outputs[ t.var ] = result ?? 0;     // TODO: better nullability
+        if (result !== null) {
+            outputs[ t.var ] = result;
+        }
     });
     
-    return Object.keys(outputs).map(k => ({
-        var: k, value: outputs[k]
-    }));
+    return outputs;
 };

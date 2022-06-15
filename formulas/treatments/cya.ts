@@ -5,13 +5,11 @@ export const cya: Treatment = {
     var: 'cya',
     type: 'dryChemical',
     concentration: 100,
-    function: (p, r, t, c, s) => {
-        if (s.cya) {
-            return 0;
-        }
+    function: (p, r, t, c) => {
+        if (r.cya === undefined) { return null; }
         
         if (r.cya >= c.cya.min) {
-            return 0;
+            return null;
         }
         
         const target = (c.cya.min + c.cya.max) / 2.0;

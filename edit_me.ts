@@ -1,6 +1,6 @@
 import { calculate } from './formulas/calculator';
 import { chlorineFormula } from './formulas/formulas/chlorine';
-import { ReadingValue } from './formulas/models/misc/Values';
+import { ReadingValues } from './formulas/models/misc/Values';
 import { Pool } from './formulas/models/pool/Pool';
 import { EffectiveTargetRange } from './formulas/models/TargetRange';
 
@@ -13,19 +13,14 @@ const pool: Pool = {
     waterType: 'chlorine',
 };
 
-const readings: ReadingValue[] = [      // TODO: have typescript enforce array is readings supported by formula
-    {
-        var: 'fc',
-        value: 0
-    }, {
-        var: 'ph',
-        value: 6.0
-    }
-];
+const readings: ReadingValues = {
+    fc: 0,
+    ph: 6.0,
+};
 
 const targetLevels: EffectiveTargetRange[] = [];
 
-const results = calculate({
+const res = calculate({
     formula,
     pool,
     readings,
@@ -34,11 +29,14 @@ const results = calculate({
 
 console.log('Results:');
 
+const results = Object.keys(res).map(k => ({
+    var: k, value: res[k]
+}));
+
 results.forEach(t => {
-    const effectiveValue = t.value ?? 0;
-    if (effectiveValue > 0) {
-        console.log(`Add ${effectiveValue} ounces of ${t.var}`);        // TODO: add treatment name here
-    } 
+    // TODO: switch text based on treatment type
+    // TODO: add treatment name
+    console.log(`Add ${t.value} ounces of ${t.var}`);
 });
 
 if (results.length === 0) {

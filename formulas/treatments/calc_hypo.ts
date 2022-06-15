@@ -6,9 +6,9 @@ export const calc_hypo: Treatment = {
     var: 'calc_hypo',
     type: 'dryChemical',
     concentration: 67,      // TODO: this should really be from (0,1] instead of x100
-    function: (p, r, t, c, s) => {
-        if (s.fc) {
-            return 0;
+    function: (p, r, t, c) => {
+        if (r.fc === undefined) {
+            return null;
         }
         
         // This target is initialized with a "let" because I might change it later.
@@ -17,18 +17,18 @@ export const calc_hypo: Treatment = {
         // If we need to shock, adjust the target to breakpoint chloriniation:
         let combined = r.tc - r.fc;
         // If the user didn't actually take a TC reading, assume the CC == 0
-        if (s.tc) { combined = 0; }
+        if (r.tc === undefined) { combined = 0; }
         
         if (combined > 0.11) {
             const breakpoint = combined * 10;
             // Check the insane case where the breakpoint chlorination level is 15 over the max configured range?
             fcTarget = Math.min(breakpoint, c.fc.max + 15);
             // Check the insane case where there is already a breakpoint amount of chlorine?
-            if (r.fc > fcTarget) { return 0; }
+            if (r.fc > fcTarget) { return null; }
         } else {
             // If we don't need to shock, just exit if the reading is above the min target range:
             if (r.fc >= c.fc.min) {
-                return 0;
+                return null;
             }
         }
         
