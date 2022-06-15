@@ -1,40 +1,51 @@
 import { ReadingValues } from '~/formulas/models/misc/Values';
-import { Pool } from '~/formulas/models/pool/Pool';
 import { lsi } from '~/formulas/treatments/lsi';
+import { getPool } from '../helpers/testHelpers';
 
-describe('LSI Treatment', () => {
-
-    const getPool = (): Pool => {
-        const bentleysPool: Omit<Pool, 'liters'> = {
-            gallons: 10000,
-            wallType: 'plaster',
-            waterType: 'chlorine',
-        };
-        return {
-            ...bentleysPool,
-            liters: bentleysPool.gallons * 3.785411784,
-        };
-    };
-
-    const getReadings = (): ReadingValues => {
-        return {
-            fc: 3.0
-        };
-    };
-
-    it('Correctly calculates LSI when all params are present', () => {
-        
-    });
-    it('Returns null when all params are not present', () => {
+describe('LSI Calculation', () => {
+    it('correctly calculates LSI when it\'s slightly negative', () => {
         // Arrange
         const pool = getPool();
-        const readings = getReadings();
-        const skipped = {
-            'ph': true
+        const readings: ReadingValues = {
+            ta: 80,
+            ch: 300,
+            ph: 7.4,
+            tds: 750,
+            temp_f: 75
         };
 
         // Act
-        const res = lsi.function(pool, readings, {}, {}, skipped);
+        const res = lsi.function(pool, readings, {}, {});
+
+        // Assert
+        expect(res).toBeCloseTo(-0.21686, 3);
+    });
+
+    it('correctly calculates LSI when it\'s slightly positive', () => {
+        // Arrange
+        const pool = getPool();
+        const readings: ReadingValues = {
+            ta: 80,
+            ch: 300,
+            ph: 7.8,
+            tds: 750,
+            temp_f: 75
+        };
+
+        // Act
+        const res = lsi.function(pool, readings, {}, {});
+
+        // Assert
+        expect(res).toBeCloseTo(0.18313, 3);
+    });
+
+    it('returns null when required readings are missing', () => {
+        // Arrange
+        const pool = getPool();
+        const readings = {};
+
+        // Act
+        const res = lsi.function(pool, readings, {}, {});
 
         // Assert
         expect(res).toBe(null);

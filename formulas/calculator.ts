@@ -59,17 +59,10 @@ export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
     const effectiveTargetRanges = getTargets(formula, req.targetLevels);
 
     const outputs: Record<string, number> = {};
-    const readings: Record<string, number> = {};
-    const skipped: Record<string, boolean> = {};
-    formula.readings.forEach(r => {
-        const entry = req.readings.find(x => x.var === r.var);
-        if (entry) {
-            readings[r.var] = entry.value;
-        } else {
-            readings[r.var] = r.defaultValue;
-            skipped[r.var] = true;
-        }
-    });
+    const readings: Record<string, number> = req.readings.reduce((prev, current) => {
+        prev[current.var] = current.value;
+        return prev;
+    }, {});
 
     formula.treatments.forEach(t => {
         const result = t.function(
@@ -77,7 +70,6 @@ export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
             readings,
             outputs,
             effectiveTargetRanges,
-            skipped,
         );
         outputs[ t.var ] = result ?? 0;     // TODO: better nullability
     });
