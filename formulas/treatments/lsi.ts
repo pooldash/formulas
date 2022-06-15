@@ -10,8 +10,7 @@ export const lsi: Treatment = {
         || (r.ph === undefined)
         || (r.tds === undefined)
         || (r.ta === undefined)
-        || ((r.temp_f === undefined) && (r.temp_c === undefined))
-        ) {
+        || ((r.temp_f === undefined) && (r.temp_c === undefined))) {
             return null;
         }
 

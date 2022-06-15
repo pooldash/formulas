@@ -20,7 +20,7 @@ const readings: ReadingValues = {
 
 const targetLevels: EffectiveTargetRange[] = [];
 
-const results = calculate({
+const res = calculate({
     formula,
     pool,
     readings,
@@ -29,11 +29,14 @@ const results = calculate({
 
 console.log('Results:');
 
+const results = Object.keys(res).map(k => ({
+    var: k, value: res[k]
+}));
+
 results.forEach(t => {
-    const effectiveValue = t.value ?? 0;
-    if (effectiveValue > 0) {
-        console.log(`Add ${effectiveValue} ounces of ${t.var}`);        // TODO: add treatment name here
-    } 
+    // TODO: switch text based on treatment type
+    // TODO: add treatment name
+    console.log(`Add ${t.value} ounces of ${t.var}`);
 });
 
 if (results.length === 0) {

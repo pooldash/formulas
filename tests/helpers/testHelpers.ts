@@ -2,7 +2,7 @@ import { Pool } from '~/formulas/models/pool/Pool';
 
 export const getPool = (): Pool => {
     const bentleysPool: Omit<Pool, 'liters'> = {
-        gallons: 10000,
+        gallons: 20000,
         wallType: 'plaster',
         waterType: 'chlorine',
     };
