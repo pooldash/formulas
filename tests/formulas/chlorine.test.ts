@@ -7,8 +7,14 @@ import { getPool } from '../helpers/testHelpers';
 /*  This should be the formula under test  */
 const formula = chlorineFormula;
 
+// TODO: rethink these formula tests.
+
+// include tests for correct readings & treatments?
+// include test for target levels & overrides?
+// do a tiny number of full-blown integration tests?
+
 describe('Chlorine Formula integration test', () => {
-    it('Random happy test path.', () => {     
+    it('returns granular chlorine & soda ash when fc and ph are low', () => {     
         // Arrange   
         const pool = getPool();
         const targetLevels: EffectiveTargetRange[] = [];
