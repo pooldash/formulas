@@ -1,21 +1,16 @@
 /// This runs a formula and returns some results!
 
 import { Formula } from './models/Formula';
-import { EffectiveTargetRanges } from './models/misc/Values';
+import { EffectiveTargetRanges, ReadingValues, TreatmentValues } from './models/misc/Values';
 import { Pool } from './models/pool/Pool';
 import { EffectiveTargetRange } from './models/TargetRange';
 
 
 export interface FormulaRunRequest {
     formula: Formula;
-    readings: ReadingEntry[];
+    readings: ReadingValues;
     targetLevels: EffectiveTargetRange[];   // TODO: reconsider this!
     pool: Pool;
-}
-
-interface ReadingEntry {
-    var: string;
-    value: number;
 }
 
 interface CalculationResult {
@@ -55,14 +50,9 @@ const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): Ef
 
 export const calculate = (req: FormulaRunRequest): CalculationResult[] => {
 
-    const formula = req.formula;
+    const { formula, readings } = req;
     const effectiveTargetRanges = getTargets(formula, req.targetLevels);
-
-    const outputs: Record<string, number> = {};
-    const readings: Record<string, number> = req.readings.reduce((prev, current) => {
-        prev[current.var] = current.value;
-        return prev;
-    }, {});
+    const outputs: TreatmentValues = {};
 
     formula.treatments.forEach(t => {
         const result = t.function(

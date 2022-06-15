@@ -1,6 +1,6 @@
 import { calculate } from '~/formulas/calculator';
 import { chlorineFormula } from '~/formulas/formulas/chlorine';
-import { ReadingValue } from '~/formulas/models/misc/Values';
+import { ReadingValues } from '~/formulas/models/misc/Values';
 import { Pool } from '~/formulas/models/pool/Pool';
 import { EffectiveTargetRange } from '~/formulas/models/TargetRange';
 
@@ -15,15 +15,10 @@ describe('Chlorine Formula integration test', () => {
             waterType: 'chlorine',
         };
     
-        const readings: ReadingValue[] = [      // TODO: have typescript enforce array is readings supported by formula
-            {
-                var: 'fc',
-                value: 0
-            }, {
-                var: 'ph',
-                value: 6.0
-            }
-        ];
+        const readings: ReadingValues = {
+            fc: 0,
+            ph: 6.0,
+        };
     
         const targetLevels: EffectiveTargetRange[] = [];
     
