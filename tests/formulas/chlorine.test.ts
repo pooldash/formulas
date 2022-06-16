@@ -7,20 +7,20 @@ import { getPool } from '../helpers/testHelpers';
 /*  This should be the formula under test  */
 const formula = chlorineFormula;
 
-// TODO: rethink these formula tests.
-
-// include tests for correct readings & treatments?
-// include test for target levels & overrides?
-// do a tiny number of full-blown integration tests?
-
-describe('Chlorine Formula integration test', () => {
-    it('returns granular chlorine & soda ash when fc and ph are low', () => {     
-        // Arrange   
+describe('Chlorine Formula', () => {
+    it('returns all the treatments to raise levels when they\'re low', () => {     
+        // Arrange
         const pool = getPool();
         const targetLevels: EffectiveTargetRange[] = [];
         const readings: ReadingValues = {
             fc: 0,
-            ph: 6.0,
+            ph: 0,
+            tc: 0,
+            ta: 0,
+            ch: 0,
+            cya: 0,
+            temp_f: 80,
+            tds: 0,
         };
 
         // Act
@@ -32,7 +32,66 @@ describe('Chlorine Formula integration test', () => {
         });
         
         // Assert
-        expect(res.calc_hypo).toBeCloseTo(10.4);
-        expect(res.soda_ash).toBeCloseTo(68.6);
-    });        
+        expect(Object.keys(res).length).toBe(5);
+        expect(res.calc_hypo).toBeCloseTo(5.2);
+        expect(res.soda_ash).toBeCloseTo(48.0);
+        expect(res.baking_soda).toBeCloseTo(147.2);
+        expect(res.cal_chlor).toBeCloseTo(432);
+        expect(res.cya).toBeCloseTo(52);
+    });
+
+    it('returns all the treatments to lower levels when they\'re high', () => {     
+        // Arrange
+        const pool = getPool();
+        const targetLevels: EffectiveTargetRange[] = [];
+        const readings: ReadingValues = {
+            fc: 9,
+            ph: 8,
+            ta: 300,
+            tc: 9,
+            cya: 200,
+            temp_f: 200,
+            tds: 10000,
+        };
+
+        // Act
+        const res = calculate({
+            formula,
+            pool,
+            readings,
+            targetLevels,
+        });
+        
+        // Assert
+        expect(Object.keys(res).length).toBe(1);
+        expect(res.m_acid).toBeCloseTo(17.4);
+    });
+
+    it('doesn\'t recommend anything when levels are balanced', () => {
+        // Arrange
+        const pool = getPool();
+        const targetLevels: EffectiveTargetRange[] = [];
+        const readings: ReadingValues = {
+            fc: 3,
+            ph: 7.2,
+            tc: 3,
+            ta: 200,
+            ch: 300,
+            cya: 40,
+            temp_f: 80,
+            tds: 500
+        };
+
+        // Act
+        const res = calculate({
+            formula,
+            pool,
+            readings,
+            targetLevels,
+        });
+        
+        // Assert
+        expect(Object.keys(res).length).toBe(1);
+        expect(res.lsi).toBeCloseTo(0.052);
+    });
 });
