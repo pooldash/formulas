@@ -22,6 +22,11 @@ export const lsi: Treatment = {
         const cc = Math.log10(r.ch) - .4;
         const dd = Math.log10(r.ta);
 
-        return r.ph - 9.3 - aa - bb + cc + dd;
+        const result = r.ph - 9.3 - aa - bb + cc + dd;
+
+        if (isNaN(result) || !isFinite(result)) {
+            return null;
+        }
+        return result;
     }
 };

@@ -29,7 +29,10 @@ export const soda_ash: Treatment = {
         // This is just a rough approximation grabbed out of thin air -- if anyone
         // wants to "remix" this recipe with a better one, please do! We can use
         // sophisticated operators like Math.log(), I just don't do it yet...
-        const sodaAshMultiplier = .00035 * (r.ph + 1);
+        const sodaAshMultiplier = Math.max(
+            0.000805,
+            0.00035 * (r.ph + 1)
+        );
         
         const calculatedAmount = p.gallons * pHDelta * sodaAshMultiplier;
         
