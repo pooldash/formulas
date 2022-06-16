@@ -6,9 +6,9 @@ describe('Soda Ash treatment function', () => {
     // Arrange
     const pool = getPool();
     const targetLevels: EffectiveTargetRanges = { ph: { min: 7.2, max: 7.6 } };
-
-    // [ph, expected_soda_ash]
+    
     const testCases: any[] = [
+        // [ph, expected_soda_ash]
         [0, 48.000],
         [4.9, 48.000],
         [5.0, 48.000],
@@ -39,15 +39,15 @@ describe('Soda Ash treatment function', () => {
         [7.4, null]
     ];       
 
-    test.each(testCases)('ph of %f should return %f', (ph: number, expected: number | null) => {
+    test.each(testCases)('{ ph: %f } should return %f ounces', (ph: number, expected_soda_ash: number | null) => {
         // Act
         const res = soda_ash.function(pool, { ph }, {}, targetLevels);
 
         // Assert
-        if (expected === null) {
+        if (expected_soda_ash === null) {
             expect(res).toBeNull();
         } else {
-            expect(res).toBeCloseTo(expected);
+            expect(res).toBeCloseTo(expected_soda_ash);
         }
     });
 });
