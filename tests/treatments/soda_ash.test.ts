@@ -50,4 +50,13 @@ describe('Soda Ash treatment function', () => {
             expect(res).toBeCloseTo(expected_soda_ash);
         }
     });
+
+    it('returns null when no pH reading is taken', () => {
+        // Arrange
+        const pool = getPool();
+        const targetLevels: EffectiveTargetRanges = { ph: { min: 7.2, max: 7.6 } };
+
+        // Act
+        const res = soda_ash.function(pool, {}, {}, targetLevels);
+    });
 });
