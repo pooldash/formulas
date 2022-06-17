@@ -37,7 +37,7 @@ describe('Soda Ash treatment function', () => {
         [7.2, null],
         [7.3, null],
         [7.4, null]
-    ];       
+    ];
 
     test.each(testCases)('{ ph: %f } should return %f ounces', (ph: number, expected_soda_ash: number | null) => {
         // Act
@@ -58,5 +58,8 @@ describe('Soda Ash treatment function', () => {
 
         // Act
         const res = soda_ash.function(pool, {}, {}, targetLevels);
+
+        // Assert
+        expect(res).toBeNull();
     });
 });

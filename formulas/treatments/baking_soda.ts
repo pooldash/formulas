@@ -21,7 +21,7 @@ export const baking_soda: Treatment = {
         // so we should calculate how much (if any) the soda ash has
         // already moved the TA & offset our new delta accordingly:
         const sodaAshMultiplierForTA = .00014;
-        const taIncreaseFromSodaAsh = t.soda_ash / (sodaAshMultiplierForTA * p.gallons);
+        const taIncreaseFromSodaAsh = (t.soda_ash || 0) / (sodaAshMultiplierForTA * p.gallons);
         
         if (taIncreaseFromSodaAsh >= taDelta) {
             return null;
