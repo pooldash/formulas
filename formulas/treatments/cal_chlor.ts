@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const cal_chlor: Treatment = {
     name: 'Calcium Chloride',
-    var: 'cal_chlor',
+    id: 'cal_chlor',
     type: 'dryChemical',
     concentration: 100,
     function: (p, r, t, c) => {

@@ -35,13 +35,29 @@ export const chlorineFormula: Formula = {
         tds
     ],
     targets: [{
-        var: 'fc',
+        id: 'fc',
         range: {
             min: 2,
             max: 3,
         },
         name: 'Free Chlorine',
         description: null,
+        derive: r => r.fc ?? null
+    },
+    {
+        id: 'cc',
+        range: {
+            min: 0,
+            max: .11,
+        },
+        name: 'Combined Chlorine',
+        description: null,
+        derive: r => {
+            if (r.tc === undefined || r.fc === undefined) {
+                return 0;       // We want to return null, but meh
+            }
+            return r.tc - r.cc;
+        }
     }],
     treatments: [
         calc_hypo,

@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const soda_ash: Treatment = {
     name: 'Sodium Carbonate',
-    var: 'soda_ash',
+    id: 'soda_ash',
     type: 'dryChemical',
     concentration: 100,
     function: (p, r, t, c) => {

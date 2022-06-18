@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const phosphate_rem: Treatment = {
     name: 'Phosphate Remover',
-    var: 'phosphate_rem',
+    id: 'phosphate_rem',
     type: 'dryChemical',
     concentration: 100,
     function: (p, r, t, c) => {

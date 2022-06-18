@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const cya: Treatment = {
     name: 'Cyanuric Acid',
-    var: 'cya',
+    id: 'cya',
     type: 'dryChemical',
     concentration: 100,
     function: (p, r, t, c) => {

@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const m_acid: Treatment = {
     name: 'Muriatic Acid',
-    var: 'm_acid',
+    id: 'm_acid',
     type: 'liquidChemical',
     concentration: 31,
     function: (p, r, t, c) => {

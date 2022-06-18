@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const lsi: Treatment = {
     name: 'LSI',
-    var: 'lsi',
+    id: 'lsi',
     type: 'calculation',
     function: (p, r, t, c) => {
         // We need these 4 readings + temperature to calculate this:

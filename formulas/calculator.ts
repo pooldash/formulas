@@ -1,7 +1,8 @@
 /// This runs a formula and returns some results!
 
 import { Formula } from './models/Formula';
-import { EffectiveTargetRanges, ReadingValues, TreatmentValues } from './models/misc/Values';
+import { avg } from './models/misc/Range';
+import { EffectiveTargetRanges, EffectValues, ReadingValues, TreatmentValues } from './models/misc/Values';
 import { Pool } from './models/pool/Pool';
 import { EffectiveTargetRange } from './models/TargetRange';
 
@@ -15,12 +16,12 @@ export interface FormulaRunRequest {
 
 const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): EffectiveTargetRanges => {
     const targets = formula.readings.map(r => ({
-        var: r.var,
+        id: r.id,
         range: r.targetRange
     }));
 
     formula.targets.forEach(ft => {
-        const i = targets.findIndex(rt => rt.var === ft.var);
+        const i = targets.findIndex(rt => rt.id === ft.id);
         if (i >= 0) {
             targets[i] = ft;
         } else {
@@ -29,7 +30,7 @@ const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): Ef
     });
 
     customTargets.forEach(overrideTargetLevel => {
-        const i = targets.findIndex(rt => rt.var === overrideTargetLevel.var);
+        const i = targets.findIndex(rt => rt.id === overrideTargetLevel.id);
         if (i >= 0) {
             targets[i] = overrideTargetLevel;
         } else {
@@ -38,15 +39,20 @@ const getTargets = (formula: Formula, customTargets: EffectiveTargetRange[]): Ef
     });
 
     return targets.reduce((res, t) => {
-        res[t.var] = { ...t.range };
+        res[t.id] = { ...t.range };
         return res;
     }, {});
 };
 
 export const calculate = (req: FormulaRunRequest): TreatmentValues => {
-
     const { formula, readings } = req;
-    const effectiveTargetRanges = getTargets(formula, req.targetLevels);
+    const targets = getTargets(formula, req.targetLevels);
+
+    const desiredEffects: EffectValues = {};
+    Object.keys(readings).forEach(readingVar => {
+        desiredEffects[readingVar] = avg(targets[readingVar]) - readings[readingVar];
+    });
+
     const outputs: TreatmentValues = {};
 
     formula.treatments.forEach(t => {
@@ -54,10 +60,10 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
             req.pool,
             readings,
             outputs,
-            effectiveTargetRanges,
+            targets,
         );
         if (result !== null) {
-            outputs[ t.var ] = result;
+            outputs[ t.id ] = result;
         }
     });
     

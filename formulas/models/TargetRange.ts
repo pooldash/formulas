@@ -1,3 +1,4 @@
+import { Deriver } from './misc/Deriver';
 import { Range } from './misc/Range';
 
 /**
@@ -6,13 +7,15 @@ import { Range } from './misc/Range';
  */
 export interface TargetRange {
     /// This is the variable name that will be exposed to the treatment functions.
-    var: string;
+    id: string;
     /// The string displayed to the end-user
     name: string;
     /// The [optional] blob of text explaining to end-users how this target range is used.
     description: string | null;
-    /// The target ranges that this formula overrides.
+    /// The target ranges that this formula adds or overrides.
     range: Range;
+    /// A function that derives the current value of this metric from the pool's readings
+    derive: Deriver;
 }
 
 
@@ -20,7 +23,7 @@ export interface TargetRange {
  * The shape of the objects actually passed to the CalculationService to run the treatment functions.
  */
 export interface EffectiveTargetRange {
-    var: string;
+    id: string;
     // min & max for this treatment
     range: Range;
 }

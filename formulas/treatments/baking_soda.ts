@@ -2,7 +2,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 
 export const baking_soda: Treatment = {
     name: 'Sodium Bicarbonate',
-    var: 'baking_soda',
+    id: 'baking_soda',
     type: 'dryChemical',
     concentration: 100,
     function: (p, r, t, c) => {
