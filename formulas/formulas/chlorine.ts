@@ -34,31 +34,51 @@ export const chlorineFormula: Formula = {
         temp_c,
         tds
     ],
-    targets: [{
-        id: 'fc',
-        range: {
-            min: 2,
-            max: 3,
-        },
-        name: 'Free Chlorine',
-        description: null,
-        derive: r => r.fc ?? null
-    },
-    {
-        id: 'cc',
-        range: {
-            min: 0,
-            max: .11,
-        },
-        name: 'Combined Chlorine',
-        description: null,
-        derive: r => {
-            if (r.tc === undefined || r.fc === undefined) {
-                return 0;       // We want to return null, but meh
+    targets: [
+        {
+            id: 'cc',
+            range: {
+                min: 0,
+                max: .11,
+            },
+            name: 'Combined Chlorine',
+            description: null,
+            stomper: ({ readings, deltas, targets }) => {
+                if (readings.tc === undefined || readings.fc === undefined) {
+                    return { readings, deltas, targets };
+                }
+
+                // TODO: verify this is safe to throw a non-reading on here:
+                const cc = readings.tc - readings.fc;
+                const newReadings = {
+                    ...readings,
+                    cc,
+                };
+                const newTargets = {
+                    ...targets,
+                };
+                const newDeltas = {
+                    ...deltas,
+                };
+
+                // Adjust the fc target & delta way up
+                if (cc > targets.cc.max) {
+                    // Shock it (within a reasonable max range)!
+                    const breakpointFC = Math.min(cc * 10, targets.fc.max + 15);
+                    newTargets.fc = {
+                        min: breakpointFC,
+                        max: breakpointFC
+                    };
+                    newDeltas.fc = breakpointFC - readings.fc;
+                }
+
+                return { 
+                    readings: newReadings,
+                    deltas: newDeltas,
+                    targets: newTargets
+                };
             }
-            return r.tc - r.cc;
-        }
-    }],
+        }],
     treatments: [
         calc_hypo,
         soda_ash,
@@ -69,4 +89,3 @@ export const chlorineFormula: Formula = {
         lsi,
     ],
 };
-

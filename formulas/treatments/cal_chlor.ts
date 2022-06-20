@@ -5,19 +5,18 @@ export const cal_chlor: Treatment = {
     id: 'cal_chlor',
     type: 'dryChemical',
     concentration: 100,
-    function: (p, r, t, c) => {
-        // If the user didn't take a CH reading, don't try to balance this chem:
-        if (r.ch === undefined) { return null; }
-
-        // If the calcium hardness is above 200, we don't need to add any calcium chloride.
-        if (r.ch >= c.ch.min) {
+    function: ({ pool, deltas }) => {
+        if (deltas.ch === undefined || deltas.ch <= 0) {
             return null;
         }
-
-        const target = (c.ch.min + c.ch.max) / 2.0;
-        const delta = target - r.ch;
         const multiplier = .000144;
 
-        return p.gallons * delta * multiplier;
+        const amount = pool.gallons * deltas.ch * multiplier;
+        return {
+            amount,
+            effects: {
+                ch: deltas.ch
+            }
+        };
     }
 };

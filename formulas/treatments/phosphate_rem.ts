@@ -5,9 +5,8 @@ export const phosphate_rem: Treatment = {
     id: 'phosphate_rem',
     type: 'dryChemical',
     concentration: 100,
-    function: (p, r, t, c) => {
-        if (r.phosp === undefined) { return null; }
-        if (r.phosp < c.phosp.max) {
+    function: ({ pool, deltas }) => {
+        if (deltas.phosp === undefined || deltas.phosp <= 0) {
             return null;
         }
 
@@ -16,10 +15,15 @@ export const phosphate_rem: Treatment = {
         // 1/2 oz per 5000 gal remove 250 ppb
         //1250 gallons reduce by 250 ppb requires .125 oz
 
-        const galMultiplier = p.gallons / 1250;
-        const doseage = .125;
-        const reduction = r.phosp / 250;
+        const galMultiplier = pool.gallons / 1250;
+        const doseage = 0.125;
 
-        return Math.round(galMultiplier * reduction * doseage * 100.0) / 100.0;
+        const amount = Math.round(galMultiplier * deltas.phosp * doseage * 100.0) / 100.0;
+        return {
+            amount,
+            effects: {
+                phosp: deltas.phosp,
+            }
+        };
     }
 };

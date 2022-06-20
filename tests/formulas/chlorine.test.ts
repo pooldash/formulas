@@ -33,7 +33,7 @@ describe('Chlorine Formula', () => {
         
         // Assert
         expect(Object.keys(res).length).toBe(5);
-        expect(res.calc_hypo).toBeCloseTo(5.2);
+        expect(res.calc_hypo).toBeCloseTo(8.32);
         expect(res.soda_ash).toBeCloseTo(48.0);
         expect(res.baking_soda).toBeCloseTo(147.2);
         expect(res.cal_chlor).toBeCloseTo(432);

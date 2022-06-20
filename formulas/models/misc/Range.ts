@@ -5,7 +5,11 @@ export interface Range {
     max: number;
 }
 
-/// This is so simple we can just declare it here.
+/// These are so simple we can just declare it here.
 export const avg = (r: Range): number => {
-    return (r.min + r.min) / 2;
+    return (r.min + r.max) / 2;
+};
+
+export const isIn = (val: number, r: Range): boolean => {
+    return (val >= r.min && val <= r.max);
 };
