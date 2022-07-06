@@ -14,7 +14,7 @@ export const ch: Reading = {
         max: 600,
     },
 
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: true,

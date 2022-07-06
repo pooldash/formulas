@@ -13,7 +13,7 @@ export const ta: Reading = {
         min: 50,
         max: 150,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: true,

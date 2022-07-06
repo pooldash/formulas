@@ -48,7 +48,6 @@ export const chlorineFormula: Formula = {
                     return { readings, deltas, targets };
                 }
 
-                // TODO: verify this is safe to throw a non-reading on here:
                 const cc = readings.tc - readings.fc;
                 const newReadings = {
                     ...readings,
@@ -64,7 +63,7 @@ export const chlorineFormula: Formula = {
                 // Adjust the fc target & delta way up
                 if (cc > targets.cc.max) {
                     // Shock it (within a reasonable max range)!
-                    const breakpointFC = Math.min(cc * 10, targets.fc.max + 15);
+                    const breakpointFC = Math.min(cc * 10, 20);
                     newTargets.fc = {
                         min: breakpointFC,
                         max: breakpointFC
@@ -72,7 +71,7 @@ export const chlorineFormula: Formula = {
                     newDeltas.fc = breakpointFC - readings.fc;
                 }
 
-                return { 
+                return {
                     readings: newReadings,
                     deltas: newDeltas,
                     targets: newTargets

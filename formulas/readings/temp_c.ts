@@ -13,7 +13,7 @@ export const temp_c: Reading = {
         min: 0,
         max: 60,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'c',
     isDefaultOn: false,

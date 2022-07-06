@@ -84,9 +84,9 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
         });
 
         if (result !== null) {
-            console.log(`adding ${result.amount} ounces of ${t.name}`);
-            outputs[ t.id ] = result.amount;
-            
+            console.log(`adding ${ result.amount } ounces of ${ t.name }`);
+            outputs[t.id] = result.amount;
+
             Object.keys(result.effects).forEach(e_id => {
                 let prevDelta = 0;
                 if (deltas[e_id] !== undefined) {
@@ -96,7 +96,7 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
             });
         }
     });
-    
+
     console.log('Remaining Deltas:');
     console.dir(deltas);
     console.log('******************************************');

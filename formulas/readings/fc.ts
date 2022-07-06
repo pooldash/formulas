@@ -13,7 +13,7 @@ export const fc: Reading = {
         min: 0,
         max: 7,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: true,

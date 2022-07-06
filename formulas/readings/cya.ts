@@ -13,7 +13,7 @@ export const cya: Reading = {
         min: 0,
         max: 80,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: true,

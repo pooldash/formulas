@@ -13,7 +13,7 @@ export const phosphate: Reading = {
         min: 0,
         max: 1000,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: false,

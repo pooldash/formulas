@@ -13,7 +13,7 @@ export const tds: Reading = {
         min: 0,
         max: 4000,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: false,

@@ -13,7 +13,7 @@ export const tc: Reading = {
         min: 0,
         max: 7,
     },
-    offsetReadingid: 'fc',
+    offsetReadingId: 'fc',
     type: 'number',
     units: 'ppm',
     isDefaultOn: true,

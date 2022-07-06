@@ -13,7 +13,7 @@ export const ph: Reading = {
         min: 5,
         max: 9,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: null,
     isDefaultOn: true,

@@ -31,7 +31,7 @@ export interface Reading {
     isDefaultOn: boolean;
 
     // If there is another reading that affects the possible range of this reading:
-    offsetReadingid: string | null; // This really only affects the total-chlorine vs free-chlorine.
+    offsetReadingId: string | null; // This really only affects the total-chlorine vs free-chlorine.
 }
 
 // Eventually, this will be 'number'

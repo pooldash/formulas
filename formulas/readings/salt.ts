@@ -14,7 +14,7 @@ export const salt: Reading = {
         min: 0,
         max: 5000,
     },
-    offsetReadingid: null,
+    offsetReadingId: null,
     type: 'number',
     units: 'ppm',
     isDefaultOn: false,
