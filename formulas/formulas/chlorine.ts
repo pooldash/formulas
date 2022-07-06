@@ -16,6 +16,7 @@ import { lsi } from '~/formulas/treatments/lsi';
 import { m_acid } from '~/formulas/treatments/m_acid';
 import { soda_ash } from '~/formulas/treatments/soda_ash';
 import { cya as cya_treatment } from '~/formulas/treatments/cya';
+import { breakpointFCAdjuster } from '../adjusters/breakpoint';
 
 
 /// This is the default formula for pools with a chlorinator:
@@ -43,41 +44,10 @@ export const chlorineFormula: Formula = {
             },
             name: 'Combined Chlorine',
             description: null,
-            stomper: ({ readings, deltas, targets }) => {
-                if (readings.tc === undefined || readings.fc === undefined) {
-                    return { readings, deltas, targets };
-                }
-
-                const cc = readings.tc - readings.fc;
-                const newReadings = {
-                    ...readings,
-                    cc,
-                };
-                const newTargets = {
-                    ...targets,
-                };
-                const newDeltas = {
-                    ...deltas,
-                };
-
-                // Adjust the fc target & delta way up
-                if (cc > targets.cc.max) {
-                    // Shock it (within a reasonable max range)!
-                    const breakpointFC = Math.min(cc * 10, 20);
-                    newTargets.fc = {
-                        min: breakpointFC,
-                        max: breakpointFC
-                    };
-                    newDeltas.fc = breakpointFC - readings.fc;
-                }
-
-                return {
-                    readings: newReadings,
-                    deltas: newDeltas,
-                    targets: newTargets
-                };
-            }
         }],
+    adjusters: [
+        breakpointFCAdjuster,
+    ],
     treatments: [
         calc_hypo,
         soda_ash,

@@ -38,6 +38,7 @@ export const saltFormula: Formula = {
         phosphate,
     ],
     targets: [],
+    adjusters: [],
     treatments: [
         dichlor,
         soda_ash,

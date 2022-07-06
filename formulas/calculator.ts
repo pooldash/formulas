@@ -58,20 +58,15 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
             }
         }
 
-        // Then, if it's stompable, by all means give it a stomp:
-        const customTarget = formula.targets.find(t => t.id === id);
-        if (customTarget) {
-            const updated = customTarget.stomper({ readings, deltas, targets });
-
-            readings = updated.readings;
-            deltas = updated.deltas;
-            targets = updated.targets;
-        }
+        // Then, run any adjusters:
+        formula.adjusters.forEach(adj => {
+            const adjusted = adj({ readings, deltas, targets });
+            readings = adjusted.readings;
+            deltas = adjusted.deltas;
+            targets = adjusted.targets;
+        });
     });
 
-    console.log('******************************************');
-    console.log('Starting Deltas:');
-    console.dir(deltas);
     const outputs: TreatmentValues = {};
     formula.treatments.forEach(t => {
         const result = t.function({
@@ -84,7 +79,6 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
         });
 
         if (result !== null) {
-            console.log(`adding ${ result.amount } ounces of ${ t.name }`);
             outputs[t.id] = result.amount;
 
             Object.keys(result.effects).forEach(e_id => {
@@ -96,9 +90,5 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
             });
         }
     });
-
-    console.log('Remaining Deltas:');
-    console.dir(deltas);
-    console.log('******************************************');
     return outputs;
 };

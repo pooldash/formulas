@@ -1,4 +1,3 @@
-import { avg, isIn } from '~/formulas/models/misc/Range';
 import { EffectiveTargetRanges } from '~/formulas/models/misc/Values';
 import { baking_soda } from '~/formulas/treatments/baking_soda';
 import { getPool } from '../helpers/testHelpers';

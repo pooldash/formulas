@@ -1,4 +1,3 @@
-import { GetUpdatedReadingsAndDeltas } from './misc/UpdatedTargets';
 import { Range } from './misc/Range';
 
 /**
@@ -14,9 +13,6 @@ export interface TargetRange {
     description: string | null;
     /// The target ranges that this formula adds or overrides.
     range: Range;
-    /// A function that recalculates readings & effects in consideration of this target
-    /// For example, if the fc is only slightly low, but we need breakpoint chlorination to balance the cc.
-    stomper: GetUpdatedReadingsAndDeltas;
 }
 
 
