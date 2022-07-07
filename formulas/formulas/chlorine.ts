@@ -17,6 +17,7 @@ import { m_acid } from '~/formulas/treatments/m_acid';
 import { soda_ash } from '~/formulas/treatments/soda_ash';
 import { cya as cya_treatment } from '~/formulas/treatments/cya';
 import { breakpointFCAdjuster } from '../adjusters/breakpoint';
+import { ccTarget } from '../targets/ccTarget';
 
 
 /// This is the default formula for pools with a chlorinator:
@@ -36,17 +37,10 @@ export const chlorineFormula: Formula = {
         tds
     ],
     targets: [
-        {
-            id: 'cc',
-            range: {
-                min: 0,
-                max: .11,
-            },
-            name: 'Combined Chlorine',
-            description: null,
-        }],
+        ccTarget
+    ],
     adjusters: [
-        breakpointFCAdjuster,
+        breakpointFCAdjuster
     ],
     treatments: [
         calc_hypo,

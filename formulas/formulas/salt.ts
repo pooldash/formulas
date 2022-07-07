@@ -19,6 +19,8 @@ import { swg_up } from '~/formulas/treatments/swg_up';
 import { swg_down } from '~/formulas/treatments/swg_down';
 import { phosphate_rem } from '~/formulas/treatments/phosphate_rem';
 import { dichlor } from '../treatments/dichlor';
+import { ccTarget } from '../targets/ccTarget';
+import { breakpointFCAdjuster } from '../adjusters/breakpoint';
 
 
 /// This is the default formula for salt-water pools:
@@ -37,8 +39,12 @@ export const saltFormula: Formula = {
         temp_c,
         phosphate,
     ],
-    targets: [],
-    adjusters: [],
+    targets: [
+        ccTarget
+    ],
+    adjusters: [
+        breakpointFCAdjuster
+    ],
     treatments: [
         dichlor,
         soda_ash,
