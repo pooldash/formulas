@@ -18,6 +18,8 @@ import { soda_ash } from '~/formulas/treatments/soda_ash';
 import { cya as cya_treatment } from '~/formulas/treatments/cya';
 import { breakpointFCAdjuster } from '../adjusters/breakpoint';
 import { ccTarget } from '../targets/ccTarget';
+import { phosphate } from '../readings/phosphate';
+import { phosphate_rem } from '../treatments/phosphate_rem';
 
 
 /// This is the default formula for pools with a chlorinator:
@@ -34,7 +36,8 @@ export const chlorineFormula: Formula = {
         cya_reading,
         temp_f,
         temp_c,
-        tds
+        tds,
+        phosphate
     ],
     targets: [
         ccTarget
@@ -50,5 +53,6 @@ export const chlorineFormula: Formula = {
         cal_chlor,
         cya_treatment,
         lsi,
+        phosphate_rem
     ],
 };

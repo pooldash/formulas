@@ -1,5 +1,6 @@
 import { GetUpdatedReadingsAndDeltas } from '../models/misc/UpdatedTargets';
 
+/// Adjusts the fc target & delta to shock levels if the total chlorine is above the max range.
 export const breakpointFCAdjuster: GetUpdatedReadingsAndDeltas = ({ readings, deltas, targets }) => {
     if (readings.tc === undefined || readings.fc === undefined) {
         return { readings, deltas, targets };

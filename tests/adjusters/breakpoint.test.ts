@@ -62,7 +62,7 @@ describe('Breakpoint FC Adjuster', () => {
         });
     });
 
-    it('should adjust fc target to 20 when breakpoint level is higher', () => {
+    it('should adjust fc target to 20 when breakpoint level is higher than 20', () => {
         // Arrange
         const readings: ReadingValues = {
             fc: 0,
