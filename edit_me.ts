@@ -30,13 +30,13 @@ const res = calculate({
 console.log('Results:');
 
 const results = Object.keys(res).map(k => ({
-    var: k, value: res[k]
+    id: k, value: res[k]
 }));
 
 results.forEach(t => {
     // TODO: switch text based on treatment type
     // TODO: add treatment name
-    console.log(`Add ${t.value} ounces of ${t.var}`);
+    console.log(`Add ${t.value} ounces of ${t.id}`);
 });
 
 if (results.length === 0) {

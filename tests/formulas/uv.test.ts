@@ -1,13 +1,13 @@
 import { calculate } from '~/formulas/calculator';
-import { chlorineFormula } from '~/formulas/formulas/chlorine';
+import { uvFormula } from '~/formulas/formulas/uv';
 import { ReadingValues } from '~/formulas/models/misc/Values';
 import { EffectiveTargetRange } from '~/formulas/models/TargetRange';
 import { getPool } from '../helpers/testHelpers';
 
 /*  This should be the formula under test  */
-const formula = chlorineFormula;
+const formula = uvFormula;
 
-describe('Chlorine Formula', () => {
+describe('UV Formula', () => {
     it('returns all the treatments to raise levels when they\'re low', () => {
         // Arrange
         const pool = getPool();
@@ -21,7 +21,6 @@ describe('Chlorine Formula', () => {
             cya: 0,
             temp_f: 80,
             tds: 0,
-            phosphate: 0,
         };
 
         // Act
@@ -34,7 +33,7 @@ describe('Chlorine Formula', () => {
 
         // Assert
         expect(Object.keys(res).length).toBe(5);
-        expect(res.calc_hypo).toBeCloseTo(8.32);
+        expect(res.calc_hypo).toBeCloseTo(2.08);
         expect(res.soda_ash).toBeCloseTo(48.0);
         expect(res.baking_soda).toBeCloseTo(147.2);
         expect(res.cal_chlor).toBeCloseTo(432);
@@ -53,7 +52,6 @@ describe('Chlorine Formula', () => {
             cya: 200,
             temp_f: 200,
             tds: 10000,
-            phosphate: 200,
         };
 
         // Act
@@ -65,9 +63,8 @@ describe('Chlorine Formula', () => {
         });
 
         // Assert
-        expect(Object.keys(res).length).toBe(2);
+        expect(Object.keys(res).length).toBe(1);
         expect(res.m_acid).toBeCloseTo(17.4);
-        expect(res.phosphate_rem).toBeCloseTo(6);
     });
 
     it('doesn\'t recommend anything when levels are balanced', () => {

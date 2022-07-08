@@ -1,3 +1,4 @@
+import { avg, isIn } from '~/formulas/models/misc/Range';
 import { EffectiveTargetRanges } from '~/formulas/models/misc/Values';
 import { soda_ash } from '~/formulas/treatments/soda_ash';
 import { getPool } from '../helpers/testHelpers';
@@ -6,7 +7,7 @@ describe('Soda Ash treatment function', () => {
     // Arrange
     const pool = getPool();
     const targetLevels: EffectiveTargetRanges = { ph: { min: 7.2, max: 7.6 } };
-    
+
     const testCases: any[] = [
         // [ph, expected_soda_ash]
         [0, 48.000],
@@ -40,14 +41,30 @@ describe('Soda Ash treatment function', () => {
     ];
 
     test.each(testCases)('{ ph: %f } should return %f ounces', (ph: number, expected_soda_ash: number | null) => {
+        let delta = 0;
+        if (!isIn(ph, targetLevels.ph)) {
+            delta = avg(targetLevels.ph) - ph;
+        }
+
         // Act
-        const res = soda_ash.function(pool, { ph }, {}, targetLevels);
+        const res = soda_ash.function({
+            pool,
+            deltas: {
+                ph: delta,
+            },
+            extra: {
+                readings: {
+                    ph,
+                },
+                targets: targetLevels
+            }
+        });
 
         // Assert
         if (expected_soda_ash === null) {
             expect(res).toBeNull();
         } else {
-            expect(res).toBeCloseTo(expected_soda_ash);
+            expect(res?.amount).toBeCloseTo(expected_soda_ash);
         }
     });
 
@@ -57,7 +74,14 @@ describe('Soda Ash treatment function', () => {
         const targetLevels: EffectiveTargetRanges = { ph: { min: 7.2, max: 7.6 } };
 
         // Act
-        const res = soda_ash.function(pool, {}, {}, targetLevels);
+        const res = soda_ash.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings: {},
+                targets: targetLevels
+            }
+        });
 
         // Assert
         expect(res).toBeNull();

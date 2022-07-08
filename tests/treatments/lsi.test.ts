@@ -15,10 +15,17 @@ describe('LSI Calculation', () => {
         };
 
         // Act
-        const res = lsi.function(pool, readings, {}, {});
+        const res = lsi.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings,
+                targets: {}
+            }
+        });
 
         // Assert
-        expect(res).toBeCloseTo(-0.21686, 3);
+        expect(res?.amount).toBeCloseTo(-0.21686, 3);
     });
 
     it('correctly calculates LSI when it\'s slightly positive', () => {
@@ -33,10 +40,17 @@ describe('LSI Calculation', () => {
         };
 
         // Act
-        const res = lsi.function(pool, readings, {}, {});
+        const res = lsi.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings,
+                targets: {}
+            }
+        });
 
         // Assert
-        expect(res).toBeCloseTo(0.18313, 3);
+        expect(res?.amount).toBeCloseTo(0.18313, 3);
     });
 
     it('correctly calculates LSI when it\'s nearly 0', () => {
@@ -51,10 +65,17 @@ describe('LSI Calculation', () => {
         };
 
         // Act
-        const res = lsi.function(pool, readings, {}, {});
+        const res = lsi.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings,
+                targets: {}
+            }
+        });
 
         // Assert
-        expect(res).toBeCloseTo(-0.00165, 3);
+        expect(res?.amount).toBeCloseTo(-0.00165, 3);
     });
 
     it('returns null instead of NaN', () => {
@@ -69,7 +90,14 @@ describe('LSI Calculation', () => {
         };
 
         // Act
-        const res = lsi.function(pool, readings, {}, {});
+        const res = lsi.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings,
+                targets: {}
+            }
+        });
 
         // Assert
         expect(res).toBeNull();
@@ -87,7 +115,14 @@ describe('LSI Calculation', () => {
         };
 
         // Act
-        const res = lsi.function(pool, readings, {}, {});
+        const res = lsi.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings,
+                targets: {}
+            }
+        });
 
         // Assert
         expect(res).toBeNull();
@@ -99,7 +134,14 @@ describe('LSI Calculation', () => {
         const readings = {};
 
         // Act
-        const res = lsi.function(pool, readings, {}, {});
+        const res = lsi.function({
+            pool,
+            deltas: {},
+            extra: {
+                readings,
+                targets: {}
+            }
+        });
 
         // Assert
         expect(res).toBe(null);

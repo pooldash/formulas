@@ -1,17 +1,17 @@
 import { Reading } from '~/formulas/models/Reading';
 
-export const cya: Reading = {
-    name: 'Cyanuric Acid',
-    id: 'cya',
-    defaultValue: 40,
+export const copper: Reading = {
+    name: 'Copper',
+    id: 'copper',
+    defaultValue: 1,
     targetRange: {
-        min: 30,
-        max: 50,
+        min: 0.4,
+        max: 0.7,
     },
-    decimalPlaces: 0,
+    decimalPlaces: 1,
     sliderRange: {
         min: 0,
-        max: 80,
+        max: 7,
     },
     offsetReadingId: null,
     type: 'number',

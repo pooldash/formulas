@@ -1,28 +1,28 @@
-import { Treatment } from '~/formulas/models/Treatment';
+import { Treatment } from '../models/Treatment';
 
-
-export const calc_hypo: Treatment = {
-    name: 'Calcium Hypochlorite',
-    id: 'calc_hypo',
+export const dichlor: Treatment = {
+    name: 'Dichlor Shock',
+    id: 'dichlor',
     type: 'dryChemical',
-    concentration: 67,      // TODO: this should really be from (0,1] instead of x100
+    concentration: 99,
     function: ({ pool, deltas }) => {
         if (deltas.fc === undefined || deltas.fc <= 0) {
             return null;
         }
-        
+
         // This number is more art than science. It's the approximate ounces of <chemical>
         // required to adjust the measurement by 1ppm in a 1 gallon pool.
         // The stronger a chemical is, the lower this number will be.
-        const calcHypo67Multiplier = .000208;
-        
+        const dichlorMultiplier = .000126;
+
         // We account for the pool's volume, the desired change, and the chemical's... potency?
-        const amount = pool.gallons * deltas.fc * calcHypo67Multiplier;
+        const amount = pool.gallons * deltas.fc * dichlorMultiplier;
         return {
             amount,
             effects: {
-                fc: deltas.fc
+                fc: deltas.fc,
+                // TODO: add effect for CYA
             }
         };
-    }
+    },
 };
