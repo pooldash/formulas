@@ -66,7 +66,7 @@ describe('Chlorine Formula', () => {
 
         // Assert
         expect(Object.keys(res).length).toBe(2);
-        expect(res.m_acid).toBeCloseTo(17.4);
+        expect(res.m_acid).toBeCloseTo(26.1);
         expect(res.phosphate_rem).toBeCloseTo(6);
     });
 

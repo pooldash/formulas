@@ -9,11 +9,11 @@ export const baking_soda: Treatment = {
         if (deltas.ta === undefined || deltas.ta <= 0) {
             return null;
         }
-        
+
         // Now, calculate the amount of baking soda necessary to close the remaining gap.
         const bakingSodaTAMultiplier = .000224;
         const amount = pool.gallons * deltas.ta * bakingSodaTAMultiplier;
-        
+
         // NOTE: this ignores some complications. For instance, this new dose of
         // baking soda will also raise the pH, and could knock it above the ideal range.
         // If anyone wants to remix this recipe to account for this, you would be a hero.

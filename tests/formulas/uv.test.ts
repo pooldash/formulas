@@ -64,7 +64,7 @@ describe('UV Formula', () => {
 
         // Assert
         expect(Object.keys(res).length).toBe(1);
-        expect(res.m_acid).toBeCloseTo(17.4);
+        expect(res.m_acid).toBeCloseTo(26.1);
     });
 
     it('doesn\'t recommend anything when levels are balanced', () => {
