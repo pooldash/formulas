@@ -9,7 +9,7 @@ describe('Muriatic Acid treatment function', () => {
         const targetLevels: EffectiveTargetRanges = { ph: { min: 7, max: 7.4 } };
 
         // Act
-        const res = baking_soda.function({
+        const res = m_acid.function({
             pool,
             deltas: {},
             extra: {
@@ -24,31 +24,31 @@ describe('Muriatic Acid treatment function', () => {
 
     // Arrange
     const pool = getPool();
-    const targetLevels: EffectiveTargetRanges = { ta: { min: 180, max: 220 } };
+    const targetLevels: EffectiveTargetRanges = {};
 
     const testCases: any[] = [
         // ph_delta, expected_m_acid
-        [0.000, null],
-        [-0.100, 0.000],
-        [-0.200, 0.000],
-        [-0.300, 0.000],
-        [-0.400, 18.000],
-        [-0.500, 22.500],
-        [-0.600, 27.000],
-        [-0.700, 30.450],
-        [-0.800, 34.800],
-        [-0.900, 37.800],
-        [-1.000, 42.000],
-        [-1.100, 44.550],
-        [-1.200, 48.600],
-        [-1.300, 52.650],
-        [-1.400, 56.700],
-        [-1.500, 60.750],
-        [-1.600, 64.800],
-        [-1.700, 68.850],
-        [-1.800, 72.900],
-        [-1.900, 75.000],
-        [-2.000, 75.000]
+        [0.0, null],
+        [-0.1, 0.00],
+        [-0.2, 9.00],
+        [-0.3, 13.50],
+        [-0.4, 17.40],
+        [-0.5, 21.75],
+        [-0.6, 26.10],
+        [-0.7, 29.40],
+        [-0.8, 32.40],
+        [-0.9, 36.45],
+        [-1.0, 40.50],
+        [-1.1, 44.55],
+        [-1.2, 48.60],
+        [-1.3, 52.65],
+        [-1.4, 56.70],
+        [-1.5, 60.75],
+        [-1.6, 64.80],
+        [-1.7, 68.85],
+        [-1.8, 72.90],
+        [-1.9, 75.00],
+        [-2.0, 75.00],
     ];
 
     test.each(testCases)('deltas: { ph: %f }, should return %f ounces', (ph_delta: number, expected_m_acid: number | null) => {
@@ -56,10 +56,10 @@ describe('Muriatic Acid treatment function', () => {
         const res = m_acid.function({
             pool,
             deltas: {
-                ta: ph_delta,
+                ph: ph_delta,
             },
             extra: {
-                readings: {},
+                readings: { ph: 7.4 - ph_delta },
                 targets: targetLevels
             }
         });
