@@ -1,10 +1,11 @@
 import { calculate } from './formulas/calculator';
-import { chlorineFormula } from './formulas/formulas/chlorine';
+// import { chlorineFormula } from './formulas/formulas/chlorine';
+import { saltFormula } from './formulas/formulas/salt';
 import { ReadingValues } from './formulas/models/misc/Values';
 import { Pool } from './formulas/models/pool/Pool';
 import { EffectiveTargetRange } from './formulas/models/TargetRange';
 
-const formula = chlorineFormula;
+const formula = saltFormula;
 
 const pool: Pool = {
     gallons: 20000,
@@ -16,6 +17,7 @@ const pool: Pool = {
 const readings: ReadingValues = {
     fc: 0,
     ph: 6.0,
+    salt: 0,
 };
 
 const targetLevels: EffectiveTargetRange[] = [];
@@ -36,7 +38,7 @@ const results = Object.keys(res).map(k => ({
 results.forEach(t => {
     // TODO: switch text based on treatment type
     // TODO: add treatment name
-    console.log(`Add ${t.value} ounces of ${t.id}`);
+    console.log(`Add ${ t.value } ounces of ${ t.id }`);
 });
 
 if (results.length === 0) {
