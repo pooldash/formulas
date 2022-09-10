@@ -21,7 +21,6 @@ import { phosphate_rem } from '../treatments/phosphate_rem';
 import { na_clo } from '../treatments/na_clo';
 import { hcl } from '../treatments/hcl';
 
-
 /// This is the default formula for pools with a chlorinator:
 export const australianFormula: Formula = {
     name: 'Australian',
