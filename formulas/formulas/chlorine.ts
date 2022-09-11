@@ -20,6 +20,7 @@ import { breakpointFCAdjuster } from '../adjusters/breakpoint';
 import { ccTarget } from '../targets/ccTarget';
 import { phosphate } from '../readings/phosphate';
 import { phosphate_rem } from '../treatments/phosphate_rem';
+import { DT } from '../models/Helpers';
 
 
 /// This is the default formula for pools with a chlorinator:
@@ -45,14 +46,15 @@ export const chlorineFormula: Formula = {
     adjusters: [
         breakpointFCAdjuster
     ],
-    treatments: [
-        calc_hypo,
-        soda_ash,
-        baking_soda,
-        m_acid,
-        cal_chlor,
-        cya_treatment,
+    balanceOrder: [
+        DT('fc', calc_hypo, null),
+        DT('ph', soda_ash, m_acid),
+        DT('ta', baking_soda, m_acid),
+        DT('ch', cal_chlor, null),
+        DT('cya', cya_treatment, null),
+        DT('phosphate', null, phosphate_rem),
+    ],
+    alwaysCheck: [
         lsi,
-        phosphate_rem
     ],
 };

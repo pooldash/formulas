@@ -15,6 +15,9 @@ import { cya as cya_treatment } from '../treatments/cya';
 import { m_acid } from '../treatments/m_acid';
 import { soda_ash } from '../treatments/soda_ash';
 import { bromine } from '../treatments/bromine';
+import { DT } from '../models/Helpers';
+import { phosphate_rem } from '../treatments/phosphate_rem';
+import { phosphate } from '../readings/phosphate';
 
 
 export const bromineFormula: Formula = {
@@ -30,17 +33,20 @@ export const bromineFormula: Formula = {
         cya_reading,
         temp_f,
         temp_c,
-        tds
+        tds,
+        phosphate,
     ],
     targets: [],
     adjusters: [],
-    treatments: [
-        bromine,
-        soda_ash,
-        baking_soda,
-        m_acid,
-        cal_chlor,
-        cya_treatment,
+    balanceOrder: [
+        DT('bro', bromine, null),
+        DT('ph', soda_ash, m_acid),
+        DT('ta', baking_soda, m_acid),
+        DT('ch', cal_chlor, null),
+        DT('cya', cya_treatment, null),
+        DT('phosphate', phosphate_rem, null),
+    ],
+    alwaysCheck: [
         lsi,
-    ]
+    ],
 };

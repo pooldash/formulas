@@ -20,5 +20,6 @@ export const uvFormula: Formula = {
         }
     ],
     adjusters: chlorineFormula.adjusters,
-    treatments: chlorineFormula.treatments
+    balanceOrder: chlorineFormula.balanceOrder,
+    alwaysCheck: chlorineFormula.alwaysCheck,
 };

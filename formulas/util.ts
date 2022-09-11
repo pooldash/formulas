@@ -16,7 +16,7 @@ export class Util {
             return cp.map((n: any) => Util.deepCopy<any>(n)) as any;
         }
 
-        if (typeof target === 'object' && target !== {}) {
+        if (typeof target === 'object') {
             const cp = { ...(target as { [key: string]: any }) } as { [key: string]: any };
             Object.keys(cp).forEach((k) => {
                 cp[k] = Util.deepCopy<any>(cp[k]);
@@ -51,7 +51,7 @@ export class Util {
 
     static getDisplayNameForTreatment = (t: { name: string; concentration?: number }): string => {
         if (t.concentration && t.concentration < 100) {
-            return `${t.concentration.toFixed(0)}% ${t.name}`;
+            return `${ t.concentration.toFixed(0) }% ${ t.name }`;
         } else {
             return t.name;
         }
@@ -92,7 +92,7 @@ export class Util {
         if (volume < 1000) {
             return volume.toFixed(0);
         }
-        return `${(volume / 1000).toFixed(0)}K`;
+        return `${ (volume / 1000).toFixed(0) }K`;
     };
 
     static generateTimestamp = () => {
