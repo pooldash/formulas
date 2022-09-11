@@ -44,7 +44,7 @@ export const bromineFormula: Formula = {
         DT('ta', baking_soda, m_acid),
         DT('ch', cal_chlor, null),
         DT('cya', cya_treatment, null),
-        DT('phosphate', phosphate_rem, null),
+        DT('phosphate', null, phosphate_rem),
     ],
     alwaysCheck: [
         lsi,
