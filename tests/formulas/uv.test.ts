@@ -29,6 +29,7 @@ describe('UV Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -60,6 +61,7 @@ describe('UV Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -88,6 +90,7 @@ describe('UV Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert

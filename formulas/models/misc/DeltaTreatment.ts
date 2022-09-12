@@ -12,5 +12,5 @@ export interface DeltaTreatment {
 }
 
 
-/// For convenience, we sometimes access these by reading_id
-export type DeltaTreatmentMap = Record<string, DeltaTreatment>;
+/// We define substitutions by mapping reading_id: up | down.
+export type TreatmentSubs = Record<string, Omit<Partial<DeltaTreatment>, 'reading_id'>>;

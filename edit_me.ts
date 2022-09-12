@@ -1,9 +1,11 @@
 import { calculate } from './formulas/calculator';
 // import { chlorineFormula } from './formulas/formulas/chlorine';
 import { saltFormula } from './formulas/formulas/salt';
+import { TreatmentSubs } from './formulas/models/misc/DeltaTreatment';
 import { ReadingValues } from './formulas/models/misc/Values';
 import { Pool } from './formulas/models/pool/Pool';
 import { EffectiveTargetRange } from './formulas/models/TargetRange';
+import { calc_hypo } from './formulas/treatments/calc_hypo';
 
 const formula = saltFormula;
 
@@ -22,11 +24,18 @@ const readings: ReadingValues = {
 
 const targetLevels: EffectiveTargetRange[] = [];
 
+const substitutions: TreatmentSubs = {
+    'fc': {
+        up: calc_hypo,
+    }
+};
+
 const res = calculate({
     formula,
     pool,
     readings,
     targetLevels,
+    substitutions,
 });
 
 console.log('Results:');

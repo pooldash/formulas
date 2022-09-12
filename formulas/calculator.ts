@@ -1,6 +1,7 @@
 /// This runs a formula and returns some results!
 
 import { Formula } from './models/Formula';
+import { TreatmentSubs } from './models/misc/DeltaTreatment';
 import { avg, isIn } from './models/misc/Range';
 import { EffectiveTargetRanges, EffectValues, ReadingValues, TreatmentValues } from './models/misc/Values';
 import { Pool } from './models/pool/Pool';
@@ -12,6 +13,7 @@ export interface FormulaRunRequest {
     formula: Formula;
     readings: ReadingValues;
     targetLevels: EffectiveTargetRange[];   // TODO: reconsider this!
+    substitutions: TreatmentSubs;
     pool: Pool;
 }
 
@@ -99,8 +101,12 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
         const delta = deltas[dt.reading_id];
         if (!delta) { return; }
 
-        const t = (delta > 0) ? dt.up : dt.down;
-        // TODO: resolve substitutes here
+        let t: Treatment | null;
+        if (delta > 0) {
+            t = req.substitutions[dt.reading_id]?.up ?? dt.up;
+        } else {
+            t = req.substitutions[dt.reading_id]?.down ?? dt.down;
+        }
 
         if (!!t) {
             executeTreatmentFunction(t);

@@ -30,6 +30,7 @@ describe('Chlorine Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -62,6 +63,7 @@ describe('Chlorine Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -91,6 +93,7 @@ describe('Chlorine Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
