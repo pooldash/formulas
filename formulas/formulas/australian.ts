@@ -20,6 +20,7 @@ import { phosphate } from '../readings/phosphate';
 import { phosphate_rem } from '../treatments/phosphate_rem';
 import { na_clo } from '../treatments/na_clo';
 import { m_acid } from '../treatments/m_acid';
+import { DT } from '../models/Helpers';
 
 /// This is the default formula for pools with a chlorinator:
 export const australianFormula: Formula = {
@@ -44,14 +45,15 @@ export const australianFormula: Formula = {
     adjusters: [
         breakpointFCAdjuster
     ],
-    treatments: [
-        na_clo,
-        soda_ash,
-        baking_soda,
-        m_acid,
-        cal_chlor,
-        cya_treatment,
+    balanceOrder: [
+        DT('fc', na_clo, null),
+        DT('ph', soda_ash, m_acid),
+        DT('ta', baking_soda, m_acid),
+        DT('ch', cal_chlor, null),
+        DT('cya', cya_treatment, null),
+        DT('phosphate', phosphate_rem, null),
+    ],
+    alwaysCheck: [
         lsi,
-        phosphate_rem
     ],
 };

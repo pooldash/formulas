@@ -1,6 +1,7 @@
 import { Formula } from '~/formulas/models/Formula';
 import { ch } from '~/formulas/readings/ch';
 import { cya as cya_reading } from '~/formulas/readings/cya';
+import { cya as cya_treatment } from '../treatments/cya';
 import { fc } from '~/formulas/readings/fc';
 import { ph } from '~/formulas/readings/ph';
 import { ta } from '~/formulas/readings/ta';
@@ -14,7 +15,6 @@ import { cal_chlor } from '~/formulas/treatments/cal_chlor';
 import { lsi } from '~/formulas/treatments/lsi';
 import { m_acid } from '~/formulas/treatments/m_acid';
 import { soda_ash } from '~/formulas/treatments/soda_ash';
-import { cya as cya_treatment } from '~/formulas/treatments/cya';
 import { swg_up } from '~/formulas/treatments/swg_up';
 import { swg_down } from '~/formulas/treatments/swg_down';
 import { phosphate_rem } from '~/formulas/treatments/phosphate_rem';
@@ -23,6 +23,7 @@ import { ccTarget } from '../targets/ccTarget';
 import { breakpointFCAdjuster } from '../adjusters/breakpoint';
 import { salt as salt_reading } from '../readings/salt';
 import { salt as salt_treatment } from '../treatments/salt';
+import { DT } from '../models/Helpers';
 
 
 /// This is the default formula for salt-water pools:
@@ -48,17 +49,18 @@ export const saltFormula: Formula = {
     adjusters: [
         breakpointFCAdjuster
     ],
-    treatments: [
-        dichlor,
-        soda_ash,
-        baking_soda,
-        m_acid,
-        cal_chlor,
-        cya_treatment,
-        salt_treatment,
+    balanceOrder: [
+        DT('fc', dichlor, null),
+        DT('ph', soda_ash, m_acid),
+        DT('ta', baking_soda, m_acid),
+        DT('ch', cal_chlor, null),
+        DT('cya', cya_treatment, null),
+        DT('salt', salt_treatment, null),
+        DT('phosphate', null, phosphate_rem),
+    ],
+    alwaysCheck: [
         lsi,
         swg_up,
         swg_down,
-        phosphate_rem
     ],
 };

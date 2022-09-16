@@ -1,16 +1,19 @@
 /// This runs a formula and returns some results!
 
 import { Formula } from './models/Formula';
+import { TreatmentSubs } from './models/misc/DeltaTreatment';
 import { avg, isIn } from './models/misc/Range';
 import { EffectiveTargetRanges, EffectValues, ReadingValues, TreatmentValues } from './models/misc/Values';
 import { Pool } from './models/pool/Pool';
 import { EffectiveTargetRange } from './models/TargetRange';
+import { Treatment } from './models/Treatment';
 
 
 export interface FormulaRunRequest {
     formula: Formula;
     readings: ReadingValues;
     targetLevels: EffectiveTargetRange[];   // TODO: reconsider this!
+    substitutions: TreatmentSubs;
     pool: Pool;
 }
 
@@ -68,7 +71,9 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
     });
 
     const outputs: TreatmentValues = {};
-    formula.treatments.forEach(t => {
+
+    // This is a helper-function we'll call a few times:
+    const executeTreatmentFunction = (t: Treatment) => {
         const result = t.function({
             pool,
             deltas,
@@ -89,6 +94,29 @@ export const calculate = (req: FormulaRunRequest): TreatmentValues => {
                 deltas[e_id] = prevDelta - result.effects[e_id];
             });
         }
+    };
+
+    // First, balance in order:
+    formula.balanceOrder.forEach(dt => {
+        const delta = deltas[dt.reading_id];
+        if (!delta) { return; }
+
+        let t: Treatment | null;
+        if (delta > 0) {
+            t = req.substitutions[dt.reading_id]?.up ?? dt.up;
+        } else {
+            t = req.substitutions[dt.reading_id]?.down ?? dt.down;
+        }
+
+        if (!!t) {
+            executeTreatmentFunction(t);
+        }
     });
+
+    // Next, run the "alwaysCheck" treatments:
+    formula.alwaysCheck.forEach(
+        executeTreatmentFunction
+    );
+
     return outputs;
 };

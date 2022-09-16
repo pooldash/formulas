@@ -2,6 +2,7 @@ import { calculate } from '~/formulas/calculator';
 import { chlorineFormula } from '~/formulas/formulas/chlorine';
 import { ReadingValues } from '~/formulas/models/misc/Values';
 import { EffectiveTargetRange } from '~/formulas/models/TargetRange';
+import { dichlor } from '~/formulas/treatments/dichlor';
 import { getPool } from '../helpers/testHelpers';
 
 /*  This should be the formula under test  */
@@ -30,6 +31,7 @@ describe('Chlorine Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -62,6 +64,7 @@ describe('Chlorine Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -91,10 +94,41 @@ describe('Chlorine Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
         expect(Object.keys(res).length).toBe(1);
         expect(res.lsi).toBeCloseTo(0.052);
+    });
+
+    it('correctly substitutes dichlor when instructed to', () => {
+        // Arrange
+        const pool = getPool();
+        const targetLevels: EffectiveTargetRange[] = [];
+        const readings: ReadingValues = {
+            fc: 0,
+            ph: 0,
+            tc: 0,
+            ta: 0,
+            ch: 0,
+            cya: 0,
+            temp_f: 80,
+            tds: 0,
+            phosphate: 0,
+        };
+
+        // Act
+        const res = calculate({
+            formula,
+            pool,
+            readings,
+            targetLevels,
+            substitutions: { 'fc': { up: dichlor } },   // This is the change to input
+        });
+
+        // Assert
+        expect(Object.keys(res).length).toBe(5);
+        expect(res.dichlor).toBeCloseTo(5.04);
     });
 });

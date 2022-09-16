@@ -29,6 +29,7 @@ describe('ECOsmarte Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -59,6 +60,7 @@ describe('ECOsmarte Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert
@@ -86,6 +88,7 @@ describe('ECOsmarte Formula', () => {
             pool,
             readings,
             targetLevels,
+            substitutions: {},
         });
 
         // Assert

@@ -3,6 +3,7 @@ import { Reading } from './Reading';
 import { Treatment } from './Treatment';
 import { FormulaID } from './FormulaID';
 import { GetUpdatedReadingsAndDeltas } from './misc/UpdatedTargets';
+import { DeltaTreatment } from './misc/DeltaTreatment';
 
 /**
  * Attempts to codify the instructions for a specific type of pool maintenance.
@@ -22,8 +23,12 @@ export interface Formula {
     // The readings to take
     readings: Reading[];
 
+    // Defines both the ordering of which deltas are treated, and the default treatments associated with each effect.
+    // The treatments for each effect can be overridden via substitutes.
+    balanceOrder: DeltaTreatment[];
+
     // The possible treatments to apply (each of these includes a formula)
-    treatments: Treatment[];
+    alwaysCheck: Treatment[];
 
     // Any overrides to the default target ranges. These can still be overridden again by the end-user.
     targets: TargetRange[];
