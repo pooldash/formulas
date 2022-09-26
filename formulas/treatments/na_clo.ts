@@ -4,7 +4,7 @@ import { Treatment } from '~/formulas/models/Treatment';
 export const na_clo: Treatment = {
     name: 'Sodium Hypochlorite',
     id: 'na_clo',
-    type: 'dryChemical',
+    type: 'liquidChemical',
     concentration: 12,      // TODO: this should really be from (0,1] instead of x100
     function: ({ pool, deltas }) => {
         if (deltas.fc === undefined || deltas.fc <= 0) {
