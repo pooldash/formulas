@@ -8,7 +8,7 @@ export const phosphate: Reading = {
         min: 0,
         max: 100,
     },
-    decimalPlaces: 0,   // -1?
+    decimalPlaces: -1,
     sliderRange: {
         min: 0,
         max: 1000,

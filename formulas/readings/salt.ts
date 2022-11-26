@@ -9,7 +9,7 @@ export const salt: Reading = {
         min: 3200,
         max: 3200,
     },
-    decimalPlaces: 0,
+    decimalPlaces: -2,
     sliderRange: {
         min: 0,
         max: 5000,

@@ -8,7 +8,7 @@ export const ta: Reading = {
         min: 80,
         max: 120,
     },
-    decimalPlaces: 0, // TODO: can we change to -1?
+    decimalPlaces: -1,
     sliderRange: {
         min: 50,
         max: 150,

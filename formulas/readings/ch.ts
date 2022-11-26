@@ -8,7 +8,7 @@ export const ch: Reading = {
         min: 200,
         max: 400,
     },
-    decimalPlaces: 0, // TODO: -1
+    decimalPlaces: -1,
     sliderRange: {
         min: 0,
         max: 600,

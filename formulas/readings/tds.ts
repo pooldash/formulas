@@ -8,7 +8,7 @@ export const tds: Reading = {
         min: 0,
         max: 1500,
     },
-    decimalPlaces: 0,       // -2?
+    decimalPlaces: -2,
     sliderRange: {
         min: 0,
         max: 4000,
