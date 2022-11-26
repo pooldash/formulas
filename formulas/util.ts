@@ -1,3 +1,6 @@
+import { Formula } from './models/Formula';
+import { Treatment } from './models/Treatment';
+
 export class Util {
     static deepCopy = <T>(target: T): T => {
         if (target === null) {
@@ -124,5 +127,26 @@ export class Util {
     static timestampFromString = (ds: string): number => {
         const d = new Date(ds);
         return d.getTime();
+    };
+
+    static getAllTreatmentsForFormula = (f: Formula): Treatment[] => {
+        const res: Treatment[] = [];
+        const treatment_ids = new Set<string>();
+
+        f.balanceOrder.forEach(dt => {
+            if (dt.up && !treatment_ids.has(dt.up.id)) {
+                treatment_ids.add(dt.up.id);
+                res.push(dt.up);
+            }
+            if (dt.down && !treatment_ids.has(dt.down.id)) {
+                treatment_ids.add(dt.down.id);
+                res.push(dt.down);
+            }
+        });
+
+        f.alwaysCheck
+            .filter(t => treatment_ids.has(t.id))
+            .forEach(t => res.push(t));
+        return res;
     };
 }
