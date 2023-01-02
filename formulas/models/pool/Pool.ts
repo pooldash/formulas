@@ -8,8 +8,8 @@ export interface Pool {
     gallons: number;
     liters: number;
     // If I was really good, this would be called SanitizationMethod
-    waterType: WaterTypeValue;
+    waterType?: WaterTypeValue;
     // The wallType should be reflected in the TargetRanges, and arguably isn't useful here.
     // It could still be informative (should I use a wire or vinyl brush?), but I might remove it.
-    wallType: WallTypeValue;
+    wallType?: WallTypeValue;
 }

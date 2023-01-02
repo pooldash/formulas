@@ -102,4 +102,43 @@ describe('Calculate', () => {
         expect(Object.keys(res).length).toBe(1);
         expect(res.z).toBeCloseTo(1);
     });
+
+    it('does not explode when no wallType or waterType is given', () => {
+        // Arrange
+        const fullPool = getPool();
+        const pool = {
+            ...fullPool,
+            wallType: undefined,
+            waterType: undefined,
+        };
+        const targetLevels: EffectiveTargetRange[] = [];
+        const readings: ReadingValues = {
+            a: 4,
+            b: 4,
+        };
+        const v = {
+            ...getDummyTreatment(),
+            id: 'v',
+        };
+        const w = {
+            ...getDummyTreatment(),
+            id: 'w',
+        };
+
+        // Act
+        const res = calculate({
+            formula,
+            pool,
+            readings,
+            targetLevels,
+            substitutions: {
+                a: { up: v },
+                b: { down: w }
+            },
+        });
+
+        // Assert
+        expect(Object.keys(res).length).toBe(1);
+        expect(res.z).toBeCloseTo(1);
+    });
 });
