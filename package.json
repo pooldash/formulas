@@ -5,7 +5,8 @@
   "main": "index.ts",
   "scripts": {
     "pd": "npx ts-node edit_me.ts",
-    "test": "npx jest"
+    "test": "npx jest",
+    "generate": "npx ts-node generate.ts"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "eslint": "^8.15.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
+    "fs": "^0.0.1-security",
     "jest": "^28.1.1",
     "regenerator-runtime": "^0.13.9",
     "ts-jest": "^28.0.5",

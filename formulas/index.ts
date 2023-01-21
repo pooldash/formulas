@@ -8,6 +8,8 @@ import { bromineFormula } from './formulas/bromine';
 import { ecoSmarteFormula } from './formulas/ecosmarte';
 import { australianFormula } from './formulas/australian';
 import { dichlorFormula } from './formulas/dichlor';
+export { readingMap } from './readings/generated';
+export { treatmentMap } from './treatments/generated';
 
 /// This is a dumb list of all the formulas -- let's grow it real big!
 export const allFormulas: Formula[] = [
