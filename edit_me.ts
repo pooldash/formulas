@@ -1,25 +1,29 @@
 import { calculate } from './formulas/calculator';
 // import { chlorineFormula } from './formulas/formulas/chlorine';
-import { saltFormula } from './formulas/formulas/salt';
+// import { saltFormula } from './formulas/formulas/salt'
+import { testSodiumBisulfateFormula } from './formulas/formulas/tsbisulfate';
 import { TreatmentSubs } from './formulas/models/misc/DeltaTreatment';
 import { ReadingValues } from './formulas/models/misc/Values';
 import { Pool } from './formulas/models/pool/Pool';
 import { EffectiveTargetRange } from './formulas/models/TargetRange';
 import { calc_hypo } from './formulas/treatments/calc_hypo';
 
-const formula = saltFormula;
+const formula = testSodiumBisulfateFormula;
 
 const pool: Pool = {
-    gallons: 20000,
+    gallons: 10000,
     liters: 20000 * 3.78541,        // TODO: make this 1 or the other?
-    wallType: 'plaster',
+    wallType: 'vinyl',
     waterType: 'chlorine',
 };
 
 const readings: ReadingValues = {
-    fc: 0,
-    ph: 6.0,
-    salt: 0,
+    fc: 4,
+    tc: 1,
+    ph: 8.0,
+    ta: 200,
+    ch: 200,
+    cya: 20,
 };
 
 const targetLevels: EffectiveTargetRange[] = [];
