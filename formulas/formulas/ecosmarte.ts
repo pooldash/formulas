@@ -15,6 +15,7 @@ import { phosphate_rem } from '../treatments/phosphate_rem';
 import { ionizer } from '../treatments/ionizer';
 import { oxidizer } from '../treatments/oxidizer';
 import { DT } from '../models/Helpers';
+import { temp_f } from '../readings/temp_f';
 
 
 /// This is the default formula for pools with a chlorinator:
@@ -25,9 +26,10 @@ export const ecoSmarteFormula: Formula = {
     readings: [
         ph,
         copper,
-        ta,
         ch,
         phosphate,
+        temp_f,
+        ta,
         disox,
     ],
     targets: [],
@@ -37,11 +39,10 @@ export const ecoSmarteFormula: Formula = {
         DT('ta', baking_soda, m_acid),
         DT('ch', cal_chlor, null),
         DT('phosphate', null, phosphate_rem),
+        DT('copper', ionizer, null),
+        DT('disox', oxidizer, null),
     ],
     alwaysCheck: [
         lsi,
-        // TODO: move these 2 to "balanceOrder"?
-        ionizer,
-        oxidizer,
     ],
 };
