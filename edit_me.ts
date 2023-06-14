@@ -1,14 +1,12 @@
 import { calculate } from './formulas/calculator';
-// import { chlorineFormula } from './formulas/formulas/chlorine';
-// import { saltFormula } from './formulas/formulas/salt'
-import { testSodiumBisulfateFormula } from './formulas/formulas/tsbisulfate';
+import { sodiumBisulfateFormula } from './formulas/formulas/sbisulfate';
 import { TreatmentSubs } from './formulas/models/misc/DeltaTreatment';
 import { ReadingValues } from './formulas/models/misc/Values';
 import { Pool } from './formulas/models/pool/Pool';
 import { EffectiveTargetRange } from './formulas/models/TargetRange';
 import { calc_hypo } from './formulas/treatments/calc_hypo';
 
-const formula = testSodiumBisulfateFormula;
+const formula = sodiumBisulfateFormula;
 
 const pool: Pool = {
     gallons: 10000,
@@ -51,7 +49,7 @@ const results = Object.keys(res).map(k => ({
 results.forEach(t => {
     // TODO: switch text based on treatment type
     // TODO: add treatment name
-    console.log(`Add ${ t.value } ounces of ${ t.id }`);
+    console.log(`Add ${t.value} ounces of ${t.id}`);
 });
 
 if (results.length === 0) {

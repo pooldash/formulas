@@ -8,6 +8,7 @@ import { bromineFormula } from './formulas/bromine';
 import { ecoSmarteFormula } from './formulas/ecosmarte';
 import { australianFormula } from './formulas/australian';
 import { dichlorFormula } from './formulas/dichlor';
+import { sodiumBisulfateFormula } from './formulas/sbisulfate';
 export { readingMap } from './readings/generated';
 export { treatmentMap } from './treatments/generated';
 
@@ -20,6 +21,7 @@ export const allFormulas: Formula[] = [
     uvFormula,
     bromineFormula,
     ecoSmarteFormula,
+    sodiumBisulfateFormula,
 ];
 
 /// This defines which formulas are compatible with which water sanitization types:

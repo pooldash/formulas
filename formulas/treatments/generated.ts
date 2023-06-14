@@ -14,6 +14,7 @@ import { oxidizer } from './oxidizer';
 import { phosphate_rem } from './phosphate_rem';
 import { salt } from './salt';
 import { soda_ash } from './soda_ash';
+import { sodium_bisulfate } from './sodium_bisulfate';
 import { swg_down } from './swg_down';
 import { swg_up } from './swg_up';
 
@@ -32,6 +33,7 @@ export const treatmentMap: TreatmentMap = {
     phosphate_rem,
     salt,
     soda_ash,
+    sodium_bisulfate,
     swg_down,
     swg_up,
 };
