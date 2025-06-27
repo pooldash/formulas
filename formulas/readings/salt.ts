@@ -6,8 +6,8 @@ export const salt: Reading = {
     id: 'salt',
     defaultValue: 3200,
     targetRange: {
-        min: 3200,
-        max: 3200,
+        min: 2800,
+        max: 3500,
     },
     decimalPlaces: -2,
     sliderRange: {
